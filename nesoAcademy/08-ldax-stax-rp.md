@@ -76,9 +76,9 @@ A natural question: if `LDAX B` and `LDAX D` exist, why isn't there an `LDAX H`?
 
 ---
 
-## Why There's No LBX RP or LCX RP
+## Why There's No LDBX RP or LDCX RP
 
-Another natural question: why is there no instruction like `LBX RP` or `LCX RP` (loading register B or C via an extended register, instead of the accumulator)?
+Another natural question: why is there no instruction like `LDBX RP` or `LDCX RP` (loading register B or C via an extended register, instead of the accumulator)?
 
 **Answer:** This is because the **accumulator is a special-purpose register** with multiple unique ways of being addressed (as established in earlier sessions). General-purpose registers (like B or C) do not have this same special direct-addressing treatment — only the accumulator does.
 
