@@ -153,6 +153,8 @@ This session walks through each of the 13 types, recapping their meaning, addres
 
 ---
 
+![8085 Data Transfer Instructions](./8085-data-transfer-instructions.png)
+
 ## Session Summary
 
 - The **Data Transfer Group** of 8085 instructions consists of **13 instruction types**, totaling **83 op-codes** — confirmed by tallying each type's contribution.
