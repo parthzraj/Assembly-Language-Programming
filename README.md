@@ -1,6 +1,6 @@
 # 8085 Assembly Language Programming
 
-Learning notes and solved examples for the Intel 8085 microprocessor. The material explains how 8085 instructions work, how their opcodes are formed, and how to apply them in practical problems.
+Learning notes and solved examples for the Intel 8085 microprocessor. The material explains how 8085 instructions work, how their opcodes are formed, and how to apply them in practical problems. The collection currently contains 11 lessons covering data transfer and introductory arithmetic instructions.
 
 ## Topics Covered
 
@@ -9,7 +9,7 @@ Learning notes and solved examples for the Intel 8085 microprocessor. The materi
 - The five 8085 addressing modes
 - Solved data-transfer problems
 - Arithmetic instructions, including `ADD`, `ADI`, `INR`, `ADC`, and `ACI`
-- Instruction sizes, register pairs, memory access, and flags
+- Instruction sizes, register pairs, memory access, and flags, including carry-aware arithmetic
 
 ## Lessons
 
@@ -29,7 +29,7 @@ The lessons are stored in the [`nesoAcademy`](nesoAcademy) directory and are arr
 
 ## Suggested Study Order
 
-Start with register codes and opcode formation, then review addressing modes before working through the data-transfer lessons and solved problems. Continue with the arithmetic lessons once the flags register and accumulator operations are familiar.
+Start with register codes and opcode formation, then review addressing modes before working through the data-transfer lessons and solved problems. Continue with `ADD`, `ADI`, and `INR`, followed by `ADC` and `ACI` to build on the carry flag and accumulator operations.
 
 ## About
 
