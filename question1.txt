@@ -1,0 +1,14 @@
+Swap the element of the memory address 
+Loaded things  - 07d0 address - 5
+                 07d1 address - 7
+
+Code :
+
+LDA 07D0H
+LXI H,07D1H
+MOV B,M
+MOV M,A
+MOV A,B
+STA 07D0H
+
+HLT
