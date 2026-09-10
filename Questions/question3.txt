@@ -1,0 +1,6 @@
+WAP to add two number using ine register
+
+MVI A, 05H
+ADI 03H
+STA 2000
+HLT
