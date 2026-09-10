@@ -1,0 +1,13 @@
+Write assembly language program to add value 03 in accumulator content, then perform addition of accumulator and register B
+
+first load A and B accumulator with values
+
+MVI A, 01H
+MVI B, 03H
+HLT
+
+Code:
+
+ADI 03H
+ADD B
+HLT
