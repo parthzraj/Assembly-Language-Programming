@@ -1,6 +1,15 @@
-WAP to add two number using ine register
+>>WAP to add two number using ine register
 
 MVI A, 05H
 ADI 03H
 STA 2000
 HLT
+
+WAP to add two numbers stored in memory
+
+LDA 2000
+MOV B, A 
+LDA 2001
+ADD B
+STA 2002
+HLT 
