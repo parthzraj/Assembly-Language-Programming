@@ -10,5 +10,23 @@ MOV B,M
 MOV M,A
 MOV A,B
 STA 07D0H
+HLT
 
+Better way:
+<<Using two Register>>
+LDA 07D0H
+MOV B, A
+LDA 07D1H
+STA 07D0H 
+MOV A,B
+STA 07D1H
+HLT
+
+<<Using one Register>>
+LDA 2000
+STA 2005
+LDA 2001
+STA 2000
+LDA 2005
+STA 2001
 HLT
