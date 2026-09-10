@@ -5,7 +5,7 @@ ADI 03H
 STA 2000
 HLT
 
-WAP to add two numbers stored in memory
+>>WAP to add two numbers stored in memory
 
 LDA 2000
 MOV B, A 
