@@ -1,3 +1,38 @@
-Multiplication of two 8-bit numbers in 8085 UP
+Add two 8 bit numbers through 8085 and store the result in suitable memory location 
+
+lxi h, 1000h
+mov a, m 
+inx h
+add m 
+inx h 
+sta 1002h 
+hlt
+
+Addition between 2 8-bit number with carry :
+
+lxi h, 1000h
+mov a, m 
+inx h 
+mvi b, 00h
+add m 
+jnc loop
+inr b 
+loop: sta 1004h
+mov a, c 
+sta 1003h
+hlt
 
 
+Addition of 16bit number
+
+lhld c050h
+XCHG
+lhld c052h
+dad d
+mvi c, 00h 
+jnc loop
+inr c 
+loop: shld c054h
+mvi a,c 
+sta c0506h
+hlt
