@@ -1,19 +1,24 @@
-# 8085 Assembly Language Programming
+# Assembly Language Programming Notes
 
-Learning notes and solved examples for the Intel 8085 microprocessor. The material explains how 8085 instructions work, how their opcodes are formed, and how to apply them in practical problems. The collection currently contains 11 lessons covering data transfer and introductory arithmetic instructions.
+This repository is a study-focused collection of microprocessor and assembly-language notes for learning, practice, and revision. It includes 8085 Assembly notes, ARM assembly explanations, and a set of practice questions.
 
-## Topics Covered
+## Repository Contents
 
-- Data transfer instructions, including `LDA`, `STA`, `LDAX`, `STAX`, `LHLD`, and `SHLD`
-- Register codes and opcode formation
-- The five 8085 addressing modes
-- Solved data-transfer problems
-- Arithmetic instructions, including `ADD`, `ADI`, `INR`, `ADC`, and `ACI`
-- Instruction sizes, register pairs, memory access, and flags, including carry-aware arithmetic
+### 8085 Assembly notes
+The main learning material is organized under the [`nesoAcademy`](nesoAcademy) folder and follows a staged sequence from basic concepts to more advanced instruction groups.
 
-## Lessons
+### Additional reference notes
+- [8085Complements.md](8085Complements.md) — notes on 1's complement and 2's complement in 8085 assembly
+- [ARM_Assembly_Notes.md](ARM_Assembly_Notes.md) — ARM assembly learning notes with a clear warning about differences from 8085
 
-The lessons are stored in the [`nesoAcademy`](nesoAcademy) directory and are arranged in study order:
+### Practice questions
+The [`Questions`](Questions) folder contains sample exercises and problem prompts for revision.
+
+---
+
+## 8085 Study Path
+
+The lessons are arranged in study order and cover the core building blocks of Intel 8085 programming:
 
 1. [LDA, STA, and XCHG instructions](nesoAcademy/04ldastaxchginstructions.md)
 2. [Register codes](nesoAcademy/05-register-codes.md)
@@ -26,11 +31,45 @@ The lessons are stored in the [`nesoAcademy`](nesoAcademy) directory and are arr
 9. [Data transfer solved problems, Part 2](nesoAcademy/12-data-transfer-solved-problems-part2.md)
 10. [ADD, ADI, and INR instructions](nesoAcademy/13-add-r-adi-d8-inr-r.md)
 11. [ADC and ACI instructions](nesoAcademy/14-adc-r-aci-d8%20%281%29.md)
+12. [SUB, SUI, and DCR instructions](nesoAcademy/15-sub-r-sui-d8-dcr-r.md)
+13. [SBB and SBI instructions](nesoAcademy/16-sbb-r-sbi-d8.md)
+14. [INX and DCX register pair instructions](nesoAcademy/17-inx-rp-dcx-rp.md)
+15. [DAD instruction](nesoAcademy/18-dad-rp.md)
+16. [BCD numbers](nesoAcademy/19-bcd-numbers.md)
+17. [DAA instruction](nesoAcademy/20-daa-instruction.md)
+18. [Arithmetic instructions summary](nesoAcademy/21-summary-arithmetic-instructions.md)
+19. [Arithmetic solved problems](nesoAcademy/22-arithmetic-solved-problems.md)
+20. [Logical AND instructions](nesoAcademy/23-logical-and-instructions.md)
+21. [Logical OR instructions](nesoAcademy/24-logical-or-instructions.md)
+22. [Logical XOR instructions](nesoAcademy/25-logical-xor-instructions.md)
 
-## Suggested Study Order
+---
 
-Start with register codes and opcode formation, then review addressing modes before working through the data-transfer lessons and solved problems. Continue with `ADD`, `ADI`, and `INR`, followed by `ADC` and `ACI` to build on the carry flag and accumulator operations.
+## Topics Covered
 
-## About
+- 8085 architecture basics and registers
+- Instruction formats and opcode formation
+- Addressing modes and memory access
+- Data transfer instructions and worked examples
+- Arithmetic instructions, carry handling, and BCD logic
+- Logical instructions and flag behavior
+- Solved practice problems for revision and exam preparation
 
-This repository is a personal collection of 8085 Assembly Language notes and examples for study and revision.
+---
+
+## Suggested Order of Study
+
+A practical progression is:
+
+1. Learn register structure and instruction encoding
+2. Understand addressing modes and memory access
+3. Work through data transfer instructions and solved examples
+4. Move to arithmetic operations and flags
+5. Study logical operations and practical troubleshooting
+6. Revisit the questions and examples for practice
+
+---
+
+## Notes
+
+This repository is intended for personal learning and revision. It combines tutorial-style explanations with direct examples and problem-solving exercises for microprocessor study.
