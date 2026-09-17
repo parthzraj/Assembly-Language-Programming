@@ -36,3 +36,66 @@ loop: shld c054h
 mvi a,c 
 sta c0506h
 hlt
+
+ones complement of 16bit number
+
+lxi h, c050h 
+mov a, m 
+cma 
+sta c052h 
+inx h 
+mov a, m 
+cma 
+sta c053h 
+hlt
+
+twos complement of 16 bit number 
+
+lxi h, c050h 
+mvi b, 00h 
+mov a, m 
+cma 
+adi 01h 
+sta c052h
+jnc loop
+inr b 
+loop:
+inx h 
+mov a, m 
+cma
+add b 
+sta c053h 
+hlt
+
+multiplication of two 8 bit number 
+
+lxi h, 0c050h 
+mov b, m 
+mvi a, 00h 
+mvi d, 00h 
+inx h
+mov c, m  
+loop: add b 
+jnc loop2 
+inr d 
+loop2: dcr c 
+jnz loop 
+sta 0c053h 
+mov a, d 
+sta 0c054h 
+hlt
+
+division of 2 8 bit numbers 
+
+lxi h, 0c050h
+mov a, m
+mvi b, 00h 
+inx h 
+mov c, m 
+loop: sub b 
+inr b
+cmp c 
+jnc loop 
+##then store the things 
+
+
