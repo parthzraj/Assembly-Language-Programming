@@ -99,3 +99,158 @@ jnc loop
 ##then store the things 
 
 
+block move 
+MVI C,05H
+
+LXI H,2100H
+LXI D,2200H
+
+LOOP: MOV A,M
+      STAX D
+      INX H
+      INX D
+      DCR C
+      JNZ LOOP
+
+HLT
+
+
+block compare 
+
+LXI H,2100H
+LXI D,2200H
+
+MVI C,05H
+MVI B,00H
+
+LOOP: LDAX D
+      CMP M
+      JNZ NOMATCH
+
+      INX H
+      INX D
+      DCR C
+      JNZ LOOP
+
+      JMP STORE
+
+NOMATCH: MVI B,FFH
+
+STORE: MOV A,B
+        STA 2300H
+
+HLT
+
+
+block Exchange
+
+LXI H,2100H
+LXI D,2200H
+MVI C,05H
+
+LOOP: LDAX D
+      MOV B,A
+
+      MOV A,M
+      STAX D
+
+      MOV A,B
+      MOV M,A
+
+      INX H
+      INX D
+      DCR C
+      JNZ LOOP
+
+HLT
+
+
+block insert 
+
+LXI H,2104H
+LXI D,2105H
+
+MVI C,03H
+
+SHIFT: MOV A,M
+       STAX D
+       DCX H
+       DCX D
+       DCR C
+       JNZ SHIFT
+
+MVI A,99H
+STAX D
+
+HLT
+
+
+block delete 
+
+LXI D,2102H
+LXI H,2103H
+
+MVI C,02H
+
+SHIFT: MOV A,M
+       STAX D
+       INX H
+       INX D
+       DCR C
+       JNZ SHIFT
+
+HLT
+
+
+moving display
+
+MVI A,80H  ; puts value in A = 10000000 (08h)
+OUT 03H  ; sends content of A into I/o port 03h
+
+MVI A,01H 
+
+START: OUT 01H
+       CALL DELAY
+       RLC
+       JMP START
+
+DELAY: MVI B,FFH
+
+LOOP1: MVI C,FFH
+
+LOOP2: DCR C
+       JNZ LOOP2
+
+       DCR B
+       JNZ LOOP1
+
+       RET
+
+
+binary to bcd 
+
+LXI H, 2000H
+MOV A, M
+
+MVI B, 0AH ; decimal 10, Because to separate a 
+             decimal number into tens and units, we repeatedly subtract 10.
+
+MVI C, 00H
+
+DIVIDE: CMP B
+        JC STORE
+        SUB B
+        INR C
+        JMP DIVIDE
+
+STORE: MOV D, A ; A contains ones digit
+       MOV A, C ; C contains tens digit
+       RLC
+       RLC
+       RLC
+       RLC
+       ORA D
+
+       LXI H, 2001H
+       MOV M, A
+       HLT
