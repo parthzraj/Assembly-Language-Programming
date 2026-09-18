@@ -254,3 +254,25 @@ STORE: MOV D, A ; A contains ones digit
        LXI H, 2001H
        MOV M, A
        HLT
+
+
+binary to gray code 
+LDA 2000H
+MOV B, A
+RRC
+XRA B
+STA 2001H
+HLT
+
+
+hex to ascii 
+
+LDA 2000H
+ANI 0FH
+CPI 0AH
+JC SKIP
+ADI 07H
+
+SKIP: ADI 30H
+      STA 2001H
+      HLT
