@@ -276,3 +276,147 @@ ADI 07H
 SKIP: ADI 30H
       STA 2001H
       HLT
+
+
+
+
+find the square of a number
+LDA C500H
+MOV L,A
+MVI H,C1H
+MOV A,M
+STA C501H
+HLT
+
+find the number whether it is positive or negative
+LXI H, C050H      ; Load HL with address C050H
+                  ; HL = C050H
+
+MOV A, M          ; Load the number from memory C050H into A
+                  ; A = [C050H]
+
+RAL               ; Rotate A left through Carry
+                  ; The MSB of A goes into Carry flag
+
+JC LOOP           ; If Carry = 1, MSB was 1 → number is negative
+
+MVI A, 00H        ; Carry = 0 → MSB = 0 → number is positive
+                  ; Store 00H as indication of positive
+
+STA C051H         ; Store result at C051H
+                  ; C051H = 00H
+
+HLT               ; Stop program
+
+LOOP: MVI A, 01H  ; Negative number → store 01H as indication
+
+STA C051H         ; Store result at C051H
+                  ; C051H = 01H
+
+HLT               ; Stop program
+
+
+
+ALP to check whether a number is ODD or EVEN
+
+LDA C050H        ; Load the number from memory C050H into A
+
+RAR              ; Rotate A right through Carry
+                 ; Original LSB goes into Carry flag
+
+JC LOOP          ; If Carry = 1, LSB = 1 → number is ODD
+
+MVI A, 00H       ; Carry = 0 → LSB = 0 → number is EVEN
+
+STA C055H        ; Store 00H at C055H
+                 ; 00H indicates EVEN
+
+HLT              ; Stop execution
+
+
+LOOP: MVI A, 01H ; Carry = 1 → LSB = 1 → number is ODD
+                 ; 01H indicates ODD
+
+STA C055H        ; Store 01H at C055H
+                 ; 01H indicates ODD
+
+HLT              ; Stop execution
+
+
+
+
+LXI H, C050H      ; HL points to C050H
+MOV C, M          ; C = number of elements
+
+MVI A, 00H        ; A = 00H, used to store the sum
+MVI B, 00H        ; B = 00H, used to count carries
+
+INX H             ; HL points to first array element
+
+LOOP: ADD M       ; A = A + [HL]
+      JNC NEXT    ; If no carry, skip carry counting
+
+      INR B       ; If carry occurs, increment B
+
+NEXT: INX H       ; Move to next array element
+      DCR C       ; Decrease number of elements
+      JNZ LOOP    ; Repeat until all elements are added
+
+STA C060H          ; Store lower 8 bits of sum at C060H
+
+MOV A, B           ; Move carry count to A
+STA C061H          ; Store carry/high byte at C061H
+
+HLT                ; Stop execution
+
+
+
+
+
+8085 ALP to search a data from an array
+
+LDA C050H          ; Load the data to be searched into A
+
+LXI H, C051H       ; HL points to the first element of the array
+
+MVI C, 05H         ; C = number of elements in the array
+
+LOOP: CMP M        ; Compare A with the current array element
+      JZ FOUND     ; If equal, jump to FOUND
+
+      INX H        ; Move HL to the next array element
+      DCR C        ; Decrease element count
+      JNZ LOOP     ; If C is not zero, repeat the search
+
+MVI A, 00H         ; Data not found → put 00H in A
+STA C060H          ; Store 00H at C060H
+HLT                ; Stop execution
+
+FOUND: MVI A, 01H  ; Data found → put 01H in A
+       STA C060H    ; Store 01H at C060H
+       HLT          ; Stop execution
+
+
+8085 ALP to find largest number in an array
+
+LXI H, C050H      ; HL points to number of elements
+MOV C, M          ; C = number of elements
+
+INX H             ; HL points to first array element
+MOV A, M          ; Assume first element is the largest
+
+DCR C             ; One element already considered
+
+LOOP: INX H       ; Move to next element
+      CMP M       ; Compare current largest (A) with array element
+
+      JNC NEXT    ; If A >= M, keep A as largest
+
+      MOV A, M    ; If A < M, M is the new largest
+
+NEXT: DCR C       ; Decrease count
+      JNZ LOOP    ; Repeat until all elements are checked
+
+STA C060H         ; Store largest number at C060H
+
+HLT               ; Stop
