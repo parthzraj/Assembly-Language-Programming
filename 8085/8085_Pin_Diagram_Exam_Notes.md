@@ -32,6 +32,8 @@
 
 ---
 
+
+
 ## 1. Topic Overview
 
 The **Intel 8085** is an 8-bit microprocessor with **40 pins**. Its pins connect the processor to the clock source, memory, input/output (I/O) devices, reset circuitry, interrupt sources, and direct memory access (DMA) circuitry.
