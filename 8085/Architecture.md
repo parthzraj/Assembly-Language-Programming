@@ -928,7 +928,7 @@ This does not mean every address change is performed by one standalone, programm
 
 The timing and control unit coordinates the internal sequence of each instruction and produces external control signals.
 
-Does the execution or atleast start it
+Does the execution or atleast start it, tell everyone to do the process
 
 Release the control signal everywhere
 
