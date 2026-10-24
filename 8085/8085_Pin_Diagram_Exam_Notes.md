@@ -37,6 +37,7 @@
 The **Intel 8085** is an 8-bit microprocessor with **40 pins**. Its pins connect the processor to the clock source, memory, input/output (I/O) devices, reset circuitry, interrupt sources, and direct memory access (DMA) circuitry.
 
 A pin diagram is not just a list of names. To explain it well in an exam, know for each signal:
+
 - its full form and purpose;
 - whether it is an input or output;
 - whether it is active-high or active-low;
@@ -46,6 +47,7 @@ A pin diagram is not just a list of names. To explain it well in an exam, know f
 ### Learning objectives
 
 After studying these notes, you should be able to:
+
 - group the 8085's pins by function;
 - explain clock generation from a crystal;
 - describe READY, reset, ALE and multiplexing;
@@ -65,20 +67,20 @@ Clock and timing; wait states; reset; multiplexed address/data bus; address latc
 
 The lecture discusses these pin groups:
 
-| Group | Pins/signals | Main purpose |
-|---|---|---|
-| Clock | X1, X2, CLK OUT | Generate the processor clock and provide a clock to other system components |
-| Readiness/timing | READY | Synchronize the processor with slower devices |
-| Reset | RESET IN̅, RESET OUT | Reset the processor and help reset other circuitry |
-| Multiplexed bus | AD0–AD7, ALE | Carry the low-order address and data at different times; latch the address |
-| Higher-order address | A8–A15 | Carry the high-order address bits |
-| Control | IO/M̅, RD̅, WR̅ | Identify memory/I/O operations and read/write direction |
-| Status | S1, S0 | Indicate the type of machine cycle/operation |
-| Serial communication | SID, SOD | Serial input data and serial output data |
-| Interrupts | TRAP, RST 7.5, RST 6.5, RST 5.5, INTR | Receive interrupt requests |
-| Interrupt response | INTA̅ | Acknowledge an INTR request |
-| DMA/bus control | HOLD, HLDA | Request and acknowledge release of the system bus |
-| Power | VCC, VSS/GND | Supply power and ground reference |
+| Group                | Pins/signals                          | Main purpose                                                                |
+| -------------------- | ------------------------------------- | --------------------------------------------------------------------------- |
+| Clock                | X1, X2, CLK OUT                       | Generate the processor clock and provide a clock to other system components |
+| Readiness/timing     | READY                                 | Synchronize the processor with slower devices                               |
+| Reset                | RESET IN̅, RESET OUT                 | Reset the processor and help reset other circuitry                          |
+| Multiplexed bus      | AD0–AD7, ALE                         | Carry the low-order address and data at different times; latch the address  |
+| Higher-order address | A8–A15                               | Carry the high-order address bits                                           |
+| Control              | IO/M̅, RD̅, WR̅                    | Identify memory/I/O operations and read/write direction                     |
+| Status               | S1, S0                                | Indicate the type of machine cycle/operation                                |
+| Serial communication | SID, SOD                              | Serial input data and serial output data                                    |
+| Interrupts           | TRAP, RST 7.5, RST 6.5, RST 5.5, INTR | Receive interrupt requests                                                  |
+| Interrupt response   | INTA̅                                | Acknowledge an INTR request                                                 |
+| DMA/bus control      | HOLD, HLDA                            | Request and acknowledge release of the system bus                           |
+| Power                | VCC, VSS/GND                          | Supply power and ground reference                                           |
 
 **Additional clarification:** The lecture explains the pin functions rather than giving a fully numbered, physical 40-pin package drawing. For a physical pin-number question, use the pin-numbered diagram provided by your course/textbook and check the exact package orientation.
 
@@ -112,6 +114,7 @@ f = \frac{1}{T}, \qquad T = \frac{1}{f}
 \]
 
 where:
+
 - \(f\) = frequency in hertz (Hz);
 - \(T\) = time period in seconds.
 
@@ -138,6 +141,7 @@ A signal stuck permanently HIGH or permanently LOW is not a useful alternating c
 ### Why does the lecture use a 6 MHz crystal for a 3 MHz clock?
 
 The lecture's explanation is:
+
 1. The crystal supplies a 6 MHz signal to the oscillator/clock circuitry.
 2. A toggle flip-flop changes its output state at each triggering clock event.
 3. The output alternates HIGH, LOW, HIGH, LOW.
@@ -153,6 +157,7 @@ f_{\text{out}} = \frac{f_{\text{in}}}{2}
 ### Toggle flip-flop analogy
 
 A toggle flip-flop changes its state when triggered:
+
 - if the output is HIGH, it changes to LOW;
 - if the output is LOW, it changes to HIGH.
 
@@ -292,6 +297,7 @@ This is one of the central explanations in the lecture.
 ### 7.3 Multiplexed lines AD0–AD7
 
 **AD0–AD7** are multiplexed address/data lines:
+
 - during the early part of a bus cycle, they carry the low-order address bits **A0–A7**;
 - later in the cycle, they carry data bits **D0–D7**.
 
@@ -308,6 +314,7 @@ If the low-order address and data each had separate pins, the processor would ne
 **ALE** stands for **Address Latch Enable**. It tells an external latch when the address is present on AD0–AD7 so that the latch can capture and hold the low-order address.
 
 In the lecture's simplified model:
+
 - **ALE = 1:** the low-order address is present on AD0–AD7 and is captured by the latch;
 - **ALE = 0:** AD0–AD7 are being used for data, and the latch holds the previously captured address.
 
@@ -349,14 +356,24 @@ Latched A0–A7 + A8–A15 = complete 16-bit address
 
 *The diagram is conceptual; it does not specify a particular latch IC or all enable/output-control wiring.*
 
+![1792834879752](image/8085_Pin_Diagram_Exam_Notes/1792834879752.png)
+
+![1792834912183](image/8085_Pin_Diagram_Exam_Notes/1792834912183.png)
+
+![1792834925713](image/8085_Pin_Diagram_Exam_Notes/1792834925713.png)
+
+![1792834939364](image/8085_Pin_Diagram_Exam_Notes/1792834939364.png)
+
+![1792834946634](image/8085_Pin_Diagram_Exam_Notes/1792834946634.png)
+
 ### 7.5 Address bus versus data bus
 
-| Feature | Address bus | Data bus |
-|---|---|---|
-| Purpose | Identifies the memory/I/O location | Carries the data being transferred |
-| Width in the 8085 | 16 bits | 8 bits |
-| Direction | Address is output by the processor | Bidirectional |
-| Relevant pins | A8–A15 plus latched A0–A7 | AD0–AD7 during the data phase |
+| Feature               | Address bus                                           | Data bus                                                |
+| --------------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| Purpose               | Identifies the memory/I/O location                    | Carries the data being transferred                      |
+| Width in the 8085     | 16 bits                                               | 8 bits                                                  |
+| Direction             | Address is output by the processor                    | Bidirectional                                           |
+| Relevant pins         | A8–A15 plus latched A0–A7                           | AD0–AD7 during the data phase                          |
 | Why a latch is needed | To preserve A0–A7 while AD0–AD7 are reused for data | Data is transferred on AD0–AD7 after the address phase |
 
 ### Exam-writing answer: ALE and multiplexing
@@ -375,6 +392,7 @@ The 8085 uses AD0–AD7 as multiplexed address/data lines to reduce the number o
 ## 8. Control Signals: IO/M̅, RD̅ and WR̅
 
 The lecture explains four basic transfer types:
+
 1. Memory Read
 2. Memory Write
 3. I/O Read
@@ -385,6 +403,7 @@ The 8085 uses three main control signals—**IO/M̅, RD̅ and WR̅**—to identi
 ### 8.1 IO/M̅
 
 IO/M̅ distinguishes a memory operation from an I/O operation:
+
 - **IO/M̅ = 0:** memory operation;
 - **IO/M̅ = 1:** I/O operation.
 
@@ -393,6 +412,7 @@ The bar indicates active-low notation, but in the lecture's table the signal's L
 ### 8.2 RD̅
 
 RD̅ is the **Read** control output and is active-low:
+
 - **RD̅ = 0:** read operation is asserted;
 - **RD̅ = 1:** read operation is not asserted.
 
@@ -401,6 +421,7 @@ During a read, data travels from the selected memory or I/O device to the proces
 ### 8.3 WR̅
 
 WR̅ is the **Write** control output and is active-low:
+
 - **WR̅ = 0:** write operation is asserted;
 - **WR̅ = 1:** write operation is not asserted.
 
@@ -408,12 +429,12 @@ During a write, data travels from the processor to the selected memory or I/O de
 
 ### Four operation types
 
-| Operation | IO/M̅ | RD̅ | WR̅ | Data direction relative to 8085 |
-|---|---:|---:|---:|---|
-| Memory Read | 0 | 0 | 1 | Memory → 8085 |
-| Memory Write | 0 | 1 | 0 | 8085 → Memory |
-| I/O Read | 1 | 0 | 1 | I/O device → 8085 |
-| I/O Write | 1 | 1 | 0 | 8085 → I/O device |
+| Operation    | IO/M̅ | RD̅ | WR̅ | Data direction relative to 8085 |
+| ------------ | -----: | ---: | ---: | ------------------------------- |
+| Memory Read  |      0 |    0 |    1 | Memory → 8085                  |
+| Memory Write |      0 |    1 |    0 | 8085 → Memory                  |
+| I/O Read     |      1 |    0 |    1 | I/O device → 8085              |
+| I/O Write    |      1 |    1 |    0 | 8085 → I/O device              |
 
 The lecture emphasizes that read and write are not asserted together for these basic operations: one is active while the other is inactive.
 
@@ -439,12 +460,12 @@ The three control inputs can represent up to \(2^3 = 8\) combinations. A decoder
 
 Using the lecture's convention and ordering the input bits as **IO/M̅, RD̅, WR̅**:
 
-| Operation | Input pattern | Selected decoder output in lecture |
-|---|---|---|
-| Memory Read | 0 0 1 | Y1 |
-| Memory Write | 0 1 0 | Y2 |
-| I/O Read | 1 0 1 | Y5 |
-| I/O Write | 1 1 0 | Y6 |
+| Operation    | Input pattern | Selected decoder output in lecture |
+| ------------ | ------------- | ---------------------------------- |
+| Memory Read  | 0 0 1         | Y1                                 |
+| Memory Write | 0 1 0         | Y2                                 |
+| I/O Read     | 1 0 1         | Y5                                 |
+| I/O Write    | 1 1 0         | Y6                                 |
 
 The selected outputs are shown with an overbar in the lecture's explanation because the decoder outputs are treated as active-low.
 
@@ -467,17 +488,18 @@ The lecture introduces S1 and S0 as status signals that are especially useful wh
 ### Input/output interpretation used in the lecture
 
 The instructor uses a simplified learning aid:
+
 - S1 = 1 is associated with an input operation;
 - S0 = 1 is associated with an output operation.
 
 Using that teaching aid:
 
-| Operation | S1 (lecture's “input” aid) | S0 (lecture's “output” aid) |
-|---|---:|---:|
-| Memory Read | 1 | 0 |
-| Memory Write | 0 | 1 |
-| I/O Read | 1 | 0 |
-| I/O Write | 0 | 1 |
+| Operation    | S1 (lecture's “input” aid) | S0 (lecture's “output” aid) |
+| ------------ | ---------------------------: | ----------------------------: |
+| Memory Read  |                            1 |                             0 |
+| Memory Write |                            0 |                             1 |
+| I/O Read     |                            1 |                             0 |
+| I/O Write    |                            0 |                             1 |
 
 **Technical caution:** This “input/output” mnemonic is a simplification for the examples discussed. In formal 8085 operation/status tables, S1 and S0 encode machine-cycle status and should be learned from the complete status table, especially for opcode fetch and interrupt-acknowledge cycles. Do not use the mnemonic as a complete replacement for the formal table.
 
@@ -504,13 +526,13 @@ These pins support serial data transfer under program control.
 
 **Parallel communication** transfers multiple bits at the same time over multiple data lines.
 
-| Feature | Serial communication | Parallel communication |
-|---|---|---|
-| Data transfer | One bit at a time | Multiple bits at once |
-| Data lines | Fewer | More |
-| Wiring cost over long distances | Often lower | Often higher |
-| Transfer speed in the lecture's basic comparison | Described as slower | Described as faster because several bits move together |
-| Example in the lecture | SID/SOD serial data pins | 8-bit data bus |
+| Feature                                          | Serial communication     | Parallel communication                                 |
+| ------------------------------------------------ | ------------------------ | ------------------------------------------------------ |
+| Data transfer                                    | One bit at a time        | Multiple bits at once                                  |
+| Data lines                                       | Fewer                    | More                                                   |
+| Wiring cost over long distances                  | Often lower              | Often higher                                           |
+| Transfer speed in the lecture's basic comparison | Described as slower      | Described as faster because several bits move together |
+| Example in the lecture                           | SID/SOD serial data pins | 8-bit data bus                                         |
 
 The lecture explains that serial communication is economical for long-distance communication because it uses fewer signal lines. Parallel communication is convenient for short-distance transfers where multiple wires can be used.
 
@@ -574,6 +596,7 @@ The priority order taught in the lecture is:
 ### What if multiple interrupts occur together?
 
 The lecture distinguishes two cases:
+
 - If requests arrive at different times, the processor services them according to the actual timing and the interrupt system's rules.
 - If multiple eligible requests are pending together, priority determines which is serviced first. A lower-priority request may remain pending and be serviced later, subject to the interrupt's behaviour and masking/enable conditions.
 
@@ -625,6 +648,7 @@ INTA̅ stands for Interrupt Acknowledge. It is an active-low output of the 8085 
 ### Why DMA is useful
 
 The lecture explains that, without DMA, a memory-to-I/O transfer typically requires:
+
 1. a memory-read operation to bring data into the processor; and
 2. an I/O-write operation to send data to the I/O device.
 
@@ -685,6 +709,7 @@ HOLD and HLDA are used for DMA bus control. HOLD is an input through which a DMA
 ## 15. VCC and VSS/GND
 
 The lecture identifies the supply pins as basic pin-diagram information:
+
 - **VCC:** +5 V supply for the 8085 in the standard 8085 system.
 - **VSS/GND:** ground reference.
 
@@ -698,32 +723,32 @@ The lecture also mentions that the “5” in the 8085 name is associated with i
 
 This table is useful for quick exam revision.
 
-| Pin/signal | Direction relative to 8085 | Main function |
-|---|---|---|
-| X1, X2 | Clock/crystal connections | Clock-generation circuit |
-| CLK OUT | Output | Supplies clock to external circuitry |
-| READY | Input | Indicates whether a device is ready |
-| RESET IN̅ | Input | Resets the processor when asserted |
-| RESET OUT | Output | Reset indication for external circuitry |
-| AD0–AD7 | Bidirectional, multiplexed | Low address bits first, then data |
-| A8–A15 | Output | High-order address bits |
-| ALE | Output | Enables external latch to capture A0–A7 |
-| IO/M̅ | Output | Distinguishes memory and I/O cycles |
-| RD̅ | Output | Read control |
-| WR̅ | Output | Write control |
-| S1, S0 | Outputs | Machine-cycle status |
-| SID | Input | Serial input data |
-| SOD | Output | Serial output data |
-| TRAP | Input | Highest-priority interrupt request in the lecture's order |
-| RST 7.5 | Input | Interrupt request |
-| RST 6.5 | Input | Interrupt request |
-| RST 5.5 | Input | Interrupt request |
-| INTR | Input | Interrupt request; lowest priority in the lecture's order |
-| INTA̅ | Output | Acknowledges INTR |
-| HOLD | Input | Requests bus control for DMA |
-| HLDA | Output | Acknowledges HOLD/bus release |
-| VCC | Supply | +5 V supply |
-| VSS/GND | Ground | Ground reference |
+| Pin/signal | Direction relative to 8085 | Main function                                             |
+| ---------- | -------------------------- | --------------------------------------------------------- |
+| X1, X2     | Clock/crystal connections  | Clock-generation circuit                                  |
+| CLK OUT    | Output                     | Supplies clock to external circuitry                      |
+| READY      | Input                      | Indicates whether a device is ready                       |
+| RESET IN̅ | Input                      | Resets the processor when asserted                        |
+| RESET OUT  | Output                     | Reset indication for external circuitry                   |
+| AD0–AD7   | Bidirectional, multiplexed | Low address bits first, then data                         |
+| A8–A15    | Output                     | High-order address bits                                   |
+| ALE        | Output                     | Enables external latch to capture A0–A7                  |
+| IO/M̅     | Output                     | Distinguishes memory and I/O cycles                       |
+| RD̅       | Output                     | Read control                                              |
+| WR̅       | Output                     | Write control                                             |
+| S1, S0     | Outputs                    | Machine-cycle status                                      |
+| SID        | Input                      | Serial input data                                         |
+| SOD        | Output                     | Serial output data                                        |
+| TRAP       | Input                      | Highest-priority interrupt request in the lecture's order |
+| RST 7.5    | Input                      | Interrupt request                                         |
+| RST 6.5    | Input                      | Interrupt request                                         |
+| RST 5.5    | Input                      | Interrupt request                                         |
+| INTR       | Input                      | Interrupt request; lowest priority in the lecture's order |
+| INTA̅     | Output                     | Acknowledges INTR                                         |
+| HOLD       | Input                      | Requests bus control for DMA                              |
+| HLDA       | Output                     | Acknowledges HOLD/bus release                             |
+| VCC        | Supply                     | +5 V supply                                               |
+| VSS/GND    | Ground                     | Ground reference                                          |
 
 ---
 
@@ -763,61 +788,61 @@ This table is useful for quick exam revision.
 
 ### 18.1 RESET IN̅ versus RESET OUT
 
-| RESET IN̅ | RESET OUT |
-|---|---|
-| Input to the 8085 | Output from the 8085 |
-| Resets the processor when asserted | Can be used to reset external circuitry |
-| Active-low | Consult the device specification for exact electrical behaviour |
+| RESET IN̅                         | RESET OUT                                                       |
+| ---------------------------------- | --------------------------------------------------------------- |
+| Input to the 8085                  | Output from the 8085                                            |
+| Resets the processor when asserted | Can be used to reset external circuitry                         |
+| Active-low                         | Consult the device specification for exact electrical behaviour |
 
 ### 18.2 AD0–AD7 versus A8–A15
 
-| AD0–AD7 | A8–A15 |
-|---|---|
-| Multiplexed low-order address/data lines | Higher-order address lines |
-| Carry A0–A7 first, then D0–D7 | Carry A8–A15 |
-| Bidirectional during data transfer | Address output lines |
+| AD0–AD7                                           | A8–A15                                     |
+| -------------------------------------------------- | ------------------------------------------- |
+| Multiplexed low-order address/data lines           | Higher-order address lines                  |
+| Carry A0–A7 first, then D0–D7                    | Carry A8–A15                               |
+| Bidirectional during data transfer                 | Address output lines                        |
 | Need an external latch to preserve the low address | Do not require this address/data separation |
 
 ### 18.3 Memory operation versus I/O operation
 
-| Memory operation | I/O operation |
-|---|---|
-| Accesses memory | Accesses an I/O device/port |
+| Memory operation                       | I/O operation                          |
+| -------------------------------------- | -------------------------------------- |
+| Accesses memory                        | Accesses an I/O device/port            |
 | IO/M̅ = 0 in the lecture's convention | IO/M̅ = 1 in the lecture's convention |
-| May be read or write | May be read or write |
+| May be read or write                   | May be read or write                   |
 
 ### 18.4 Read versus write
 
-| Read | Write |
-|---|---|
-| Data enters the processor from memory/I/O | Data leaves the processor for memory/I/O |
-| RD̅ is asserted LOW | WR̅ is asserted LOW |
+| Read                                                             | Write                                                            |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Data enters the processor from memory/I/O                        | Data leaves the processor for memory/I/O                         |
+| RD̅ is asserted LOW                                             | WR̅ is asserted LOW                                             |
 | The other control signal remains inactive in the basic operation | The other control signal remains inactive in the basic operation |
 
 ### 18.5 Serial versus parallel communication
 
-| Serial | Parallel |
-|---|---|
-| Bits sent one after another | Multiple bits sent together |
-| Fewer data lines | More data lines |
-| Often cheaper for long-distance links | Can be convenient for short-distance transfers |
+| Serial                                   | Parallel                                       |
+| ---------------------------------------- | ---------------------------------------------- |
+| Bits sent one after another              | Multiple bits sent together                    |
+| Fewer data lines                         | More data lines                                |
+| Often cheaper for long-distance links    | Can be convenient for short-distance transfers |
 | SID/SOD are serial-data pins on the 8085 | 8-bit data bus provides parallel data transfer |
 
 ### 18.6 HOLD versus HLDA
 
-| HOLD | HLDA |
-|---|---|
-| Bus request | Bus-request acknowledgement |
-| Input to the 8085 | Output from the 8085 |
+| HOLD                                   | HLDA                                                      |
+| -------------------------------------- | --------------------------------------------------------- |
+| Bus request                            | Bus-request acknowledgement                               |
+| Input to the 8085                      | Output from the 8085                                      |
 | Usually asserted by the DMA controller | Asserted by the processor when it grants/releases the bus |
 
 ### 18.7 Interrupt request versus interrupt acknowledgement
 
-| Interrupt request | INTA̅ |
-|---|---|
-| Sent to the processor by an interrupt source | Sent out by the processor |
-| Requests service | Acknowledges the INTR request |
-| TRAP, RST 7.5, RST 6.5, RST 5.5, INTR | Associated with INTR's acknowledgement sequence |
+| Interrupt request                            | INTA̅                                          |
+| -------------------------------------------- | ----------------------------------------------- |
+| Sent to the processor by an interrupt source | Sent out by the processor                       |
+| Requests service                             | Acknowledges the INTR request                   |
+| TRAP, RST 7.5, RST 6.5, RST 5.5, INTR        | Associated with INTR's acknowledgement sequence |
 
 ---
 
@@ -861,72 +886,72 @@ For a memory-to-I/O transfer without DMA, the processor reads data from memory a
 
 ### A. Very short-answer questions
 
-**Q1. How many pins does the 8085 have?**  
+**Q1. How many pins does the 8085 have?**
 **Answer:** The 8085 has 40 pins.
 
-**Q2. What is the full form of ALE?**  
+**Q2. What is the full form of ALE?**
 **Answer:** Address Latch Enable.
 
-**Q3. What is the function of READY?**  
+**Q3. What is the function of READY?**
 **Answer:** It synchronizes the 8085 with slower devices by allowing wait states when a device is not ready.
 
-**Q4. What is the full form of SID and SOD?**  
+**Q4. What is the full form of SID and SOD?**
 **Answer:** SID means Serial Input Data; SOD means Serial Output Data.
 
-**Q5. What is the full form of DMA?**  
+**Q5. What is the full form of DMA?**
 **Answer:** Direct Memory Access.
 
-**Q6. Which pin acknowledges an INTR request?**  
+**Q6. Which pin acknowledges an INTR request?**
 **Answer:** INTA̅ (Interrupt Acknowledge).
 
-**Q7. Which signal requests bus control for DMA?**  
+**Q7. Which signal requests bus control for DMA?**
 **Answer:** HOLD.
 
-**Q8. Which signal acknowledges HOLD?**  
+**Q8. Which signal acknowledges HOLD?**
 **Answer:** HLDA (Hold Acknowledge).
 
-**Q9. What are the five interrupt-request pins named in the lecture?**  
+**Q9. What are the five interrupt-request pins named in the lecture?**
 **Answer:** TRAP, RST 7.5, RST 6.5, RST 5.5 and INTR.
 
-**Q10. What is the 8085's data-bus width?**  
+**Q10. What is the 8085's data-bus width?**
 **Answer:** 8 bits.
 
-**Q11. What is the 8085's address-bus width?**  
+**Q11. What is the 8085's address-bus width?**
 **Answer:** 16 bits.
 
-**Q12. What does a bar over a signal name commonly indicate?**  
+**Q12. What does a bar over a signal name commonly indicate?**
 **Answer:** The signal is active-low.
 
 ### B. Short-answer questions
 
-**Q1. Why are X1 and X2 used?**  
+**Q1. Why are X1 and X2 used?**
 **Model answer:** X1 and X2 are clock/crystal connection pins. They are used with a crystal or clock circuit to generate the timing signal required by the 8085. The lecture uses a 6 MHz crystal example to explain a 3 MHz processor clock.
 
-**Q2. Explain the purpose of CLK OUT.**  
+**Q2. Explain the purpose of CLK OUT.**
 **Model answer:** CLK OUT provides a clock signal from the 8085 to external system components. It helps coordinate the timing of connected devices.
 
-**Q3. Explain READY and wait states.**  
+**Q3. Explain READY and wait states.**
 **Model answer:** READY indicates whether a memory or I/O device is ready for a transfer. If READY is LOW, the 8085 inserts wait states and pauses the relevant transfer. When READY becomes HIGH, the processor can continue.
 
-**Q4. Distinguish RESET IN̅ and RESET OUT.**  
+**Q4. Distinguish RESET IN̅ and RESET OUT.**
 **Model answer:** RESET IN̅ is an active-low input that resets the 8085. RESET OUT is an output that can be used to reset other connected circuitry.
 
-**Q5. Why are AD0–AD7 multiplexed?**  
+**Q5. Why are AD0–AD7 multiplexed?**
 **Model answer:** AD0–AD7 carry the low-order address first and data later. Sharing the same eight pins for two purposes reduces the number of pins required by the processor.
 
-**Q6. What is the purpose of ALE?**  
+**Q6. What is the purpose of ALE?**
 **Model answer:** ALE enables an external latch to capture the low-order address A0–A7 from AD0–AD7 before those lines are reused for data.
 
-**Q7. What do IO/M̅, RD̅ and WR̅ do?**  
+**Q7. What do IO/M̅, RD̅ and WR̅ do?**
 **Model answer:** IO/M̅ distinguishes memory and I/O operations. RD̅ is the active-low read control signal, and WR̅ is the active-low write control signal. Together they identify memory read, memory write, I/O read and I/O write.
 
-**Q8. Differentiate serial and parallel communication.**  
+**Q8. Differentiate serial and parallel communication.**
 **Model answer:** Serial communication sends one bit at a time over fewer lines, while parallel communication sends multiple bits at once over multiple lines. The lecture emphasizes the lower wiring cost of serial communication over long distances.
 
-**Q9. What is an ISR?**  
+**Q9. What is an ISR?**
 **Model answer:** An Interrupt Service Routine is a special routine executed to service an interrupt. After servicing the event, the processor can resume the interrupted program.
 
-**Q10. Explain HOLD and HLDA.**  
+**Q10. Explain HOLD and HLDA.**
 **Model answer:** HOLD is an input used by a DMA controller to request control of the system bus. HLDA is the processor's output acknowledgement that the bus has been released for the DMA transfer.
 
 ### C. Long-answer questions
@@ -964,12 +989,12 @@ Thus, READY helps coordinate transfers between the processor and devices operati
 
 The 8085 uses three control signals to distinguish memory and I/O transfers. IO/M̅ is LOW for a memory operation and HIGH for an I/O operation. RD̅ is asserted LOW for a read, and WR̅ is asserted LOW for a write.
 
-| Operation | IO/M̅ | RD̅ | WR̅ |
-|---|---:|---:|---:|
-| Memory Read | 0 | 0 | 1 |
-| Memory Write | 0 | 1 | 0 |
-| I/O Read | 1 | 0 | 1 |
-| I/O Write | 1 | 1 | 0 |
+| Operation    | IO/M̅ | RD̅ | WR̅ |
+| ------------ | -----: | ---: | ---: |
+| Memory Read  |      0 |    0 |    1 |
+| Memory Write |      0 |    1 |    0 |
+| I/O Read     |      1 |    0 |    1 |
+| I/O Write    |      1 |    1 |    0 |
 
 During a read, data moves from the selected device to the processor. During a write, data moves from the processor to the selected device.
 
@@ -1006,24 +1031,25 @@ HOLD is therefore the request input, while HLDA is the acknowledgement output.
 
 ### D. Application and reasoning questions
 
-**Q1. A device is not ready to accept data. Which pin informs the 8085, and what happens?**  
+**Q1. A device is not ready to accept data. Which pin informs the 8085, and what happens?**
 **Answer:** READY. If READY is LOW, the processor inserts wait states until the device becomes ready.
 
-**Q2. The 8085 must preserve A0–A7 while AD0–AD7 carry data. Which signal and external circuit are used?**  
+**Q2. The 8085 must preserve A0–A7 while AD0–AD7 carry data. Which signal and external circuit are used?**
 **Answer:** ALE and an external latch. ALE enables the latch to capture the low-order address.
 
-**Q3. A device needs to transfer a large block of data to or from memory while reducing processor involvement. What mechanism is suitable?**  
+**Q3. A device needs to transfer a large block of data to or from memory while reducing processor involvement. What mechanism is suitable?**
 **Answer:** DMA using a DMA controller. The controller requests the bus using HOLD and receives acknowledgement through HLDA.
 
-**Q4. The processor needs to read from an I/O device. What are the control-signal values in the lecture's table?**  
+**Q4. The processor needs to read from an I/O device. What are the control-signal values in the lecture's table?**
 **Answer:** IO/M̅ = 1, RD̅ = 0, WR̅ = 1.
 
-**Q5. Which is the highest-priority interrupt in the lecture's priority order?**  
+**Q5. Which is the highest-priority interrupt in the lecture's priority order?**
 **Answer:** TRAP.
 
 ### E. Likely high-value topics
 
 Based on the emphasis and depth in the supplied subtitles, prioritize:
+
 1. AD0–AD7 multiplexing and ALE/latch operation.
 2. READY and wait states.
 3. IO/M̅, RD̅ and WR̅ with the four operation table.
@@ -1072,31 +1098,32 @@ f = \frac{1}{T}
 6\ \text{MHz} \div 2 = 3\ \text{MHz}
 \]
 
-| Signal | Remember |
-|---|---|
-| READY | LOW → wait state; HIGH → ready |
-| RESET IN̅ | Active-low reset input |
-| ALE | Captures low-order address |
-| IO/M̅ | 0 = memory, 1 = I/O (lecture convention) |
-| RD̅ | LOW = read asserted |
-| WR̅ | LOW = write asserted |
-| SID | Serial input |
-| SOD | Serial output |
-| HOLD | Bus request to 8085 |
-| HLDA | Bus-release acknowledgement from 8085 |
+| Signal     | Remember                                 |
+| ---------- | ---------------------------------------- |
+| READY      | LOW → wait state; HIGH → ready         |
+| RESET IN̅ | Active-low reset input                   |
+| ALE        | Captures low-order address               |
+| IO/M̅     | 0 = memory, 1 = I/O (lecture convention) |
+| RD̅       | LOW = read asserted                      |
+| WR̅       | LOW = write asserted                     |
+| SID        | Serial input                             |
+| SOD        | Serial output                            |
+| HOLD       | Bus request to 8085                      |
+| HLDA       | Bus-release acknowledgement from 8085    |
 
 ### Last-minute control table
 
-| Operation | IO/M̅ | RD̅ | WR̅ |
-|---|---:|---:|---:|
-| Memory Read | 0 | 0 | 1 |
-| Memory Write | 0 | 1 | 0 |
-| I/O Read | 1 | 0 | 1 |
-| I/O Write | 1 | 1 | 0 |
+| Operation    | IO/M̅ | RD̅ | WR̅ |
+| ------------ | -----: | ---: | ---: |
+| Memory Read  |      0 |    0 |    1 |
+| Memory Write |      0 |    1 |    0 |
+| I/O Read     |      1 |    0 |    1 |
+| I/O Write    |      1 |    1 |    0 |
 
 ### Self-test checklist
 
 Before the exam, make sure you can:
+
 - [ ] Draw or reproduce a 40-pin 8085 pin diagram from your prescribed textbook.
 - [ ] Explain X1/X2, clock frequency, duty cycle and CLK OUT.
 - [ ] Explain READY and wait states without confusing READY with RESET.
@@ -1131,41 +1158,41 @@ Before the exam, make sure you can:
 
 ## 23. Subtitle Coverage Checklist
 
-| Topic identified in subtitles | Covered? | Notes |
-|---|---|---|
-| Introduction to the 40-pin 8085 diagram | Yes | Section 1–2 |
-| X1/X2 and crystal connection | Yes | Section 3 |
-| Clock pulses as timing triggers | Yes | Section 3 |
-| 6 MHz crystal and 3 MHz processor clock example | Yes | Section 3 |
-| Frequency and time period | Yes | Section 3 |
-| Duty cycle and 50% duty cycle | Yes | Section 3 |
-| Toggle flip-flop and divide-by-two explanation | Yes | Section 3 |
-| CLK OUT for external components | Yes | Section 4 |
-| READY and slower devices | Yes | Section 5 |
-| Wait-state behaviour | Yes | Section 5 |
-| RESET IN̅ and manual reset button | Yes | Section 6 |
-| RESET OUT for external circuitry | Yes | Section 6 |
-| 16-bit address bus and 8-bit data bus | Yes | Section 7 |
-| AD0–AD7 multiplexing | Yes | Section 7 |
-| A8–A15 higher-order address lines | Yes | Section 7 |
-| ALE and external latch | Yes | Section 7 |
-| Latch analogy and demultiplexing steps | Yes | Section 7 and 19 |
-| Address/data bus direction | Yes | Section 7 and 16 |
-| IO/M̅, RD̅ and WR̅ | Yes | Section 8 |
-| Four basic memory/I/O read/write operations | Yes | Section 8 |
-| 74138 decoder and active-low outputs | Yes | Section 9 |
-| S1/S0 status signals and later timing-diagram reference | Yes | Section 10 |
-| SID/SOD | Yes | Section 11 |
-| Serial versus parallel communication | Yes | Section 11 |
-| Interrupt definition and ISR | Yes | Section 12 |
-| TRAP, RST 7.5, RST 6.5, RST 5.5, INTR | Yes | Section 12 |
-| Interrupt priority order | Yes | Section 12 |
-| INTA̅ and its relationship to INTR | Yes | Section 13 |
-| DMA purpose and processor-mediated transfer explanation | Yes | Section 14 |
-| DMA controller examples 8237 and 8257 | Yes | Section 14 |
-| HOLD and HLDA sequence | Yes | Section 14 |
-| VCC and VSS/GND | Yes | Section 15 |
-| Quick revision and full pin-function recap | Yes | Sections 16 and 21 |
+| Topic identified in subtitles                           | Covered? | Notes              |
+| ------------------------------------------------------- | -------- | ------------------ |
+| Introduction to the 40-pin 8085 diagram                 | Yes      | Section 1–2       |
+| X1/X2 and crystal connection                            | Yes      | Section 3          |
+| Clock pulses as timing triggers                         | Yes      | Section 3          |
+| 6 MHz crystal and 3 MHz processor clock example         | Yes      | Section 3          |
+| Frequency and time period                               | Yes      | Section 3          |
+| Duty cycle and 50% duty cycle                           | Yes      | Section 3          |
+| Toggle flip-flop and divide-by-two explanation          | Yes      | Section 3          |
+| CLK OUT for external components                         | Yes      | Section 4          |
+| READY and slower devices                                | Yes      | Section 5          |
+| Wait-state behaviour                                    | Yes      | Section 5          |
+| RESET IN̅ and manual reset button                      | Yes      | Section 6          |
+| RESET OUT for external circuitry                        | Yes      | Section 6          |
+| 16-bit address bus and 8-bit data bus                   | Yes      | Section 7          |
+| AD0–AD7 multiplexing                                   | Yes      | Section 7          |
+| A8–A15 higher-order address lines                      | Yes      | Section 7          |
+| ALE and external latch                                  | Yes      | Section 7          |
+| Latch analogy and demultiplexing steps                  | Yes      | Section 7 and 19   |
+| Address/data bus direction                              | Yes      | Section 7 and 16   |
+| IO/M̅, RD̅ and WR̅                                   | Yes      | Section 8          |
+| Four basic memory/I/O read/write operations             | Yes      | Section 8          |
+| 74138 decoder and active-low outputs                    | Yes      | Section 9          |
+| S1/S0 status signals and later timing-diagram reference | Yes      | Section 10         |
+| SID/SOD                                                 | Yes      | Section 11         |
+| Serial versus parallel communication                    | Yes      | Section 11         |
+| Interrupt definition and ISR                            | Yes      | Section 12         |
+| TRAP, RST 7.5, RST 6.5, RST 5.5, INTR                   | Yes      | Section 12         |
+| Interrupt priority order                                | Yes      | Section 12         |
+| INTA̅ and its relationship to INTR                     | Yes      | Section 13         |
+| DMA purpose and processor-mediated transfer explanation | Yes      | Section 14         |
+| DMA controller examples 8237 and 8257                   | Yes      | Section 14         |
+| HOLD and HLDA sequence                                  | Yes      | Section 14         |
+| VCC and VSS/GND                                         | Yes      | Section 15         |
+| Quick revision and full pin-function recap              | Yes      | Sections 16 and 21 |
 
 ### Unclear or technically simplified passages requiring verification
 
