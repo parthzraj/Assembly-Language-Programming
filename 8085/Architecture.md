@@ -928,6 +928,8 @@ This does not mean every address change is performed by one standalone, programm
 
 The timing and control unit coordinates the internal sequence of each instruction and produces external control signals.
 
+Does the execution 
+
 It coordinates:
 
 - Instruction fetch and decode
