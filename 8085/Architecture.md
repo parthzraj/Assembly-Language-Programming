@@ -930,6 +930,8 @@ The timing and control unit coordinates the internal sequence of each instructio
 
 Does the execution or atleast start it
 
+Release the control signal everywhere
+
 It coordinates:
 
 - Instruction fetch and decode
