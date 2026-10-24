@@ -968,6 +968,7 @@ The data path is 8 bits wide:
 
 - Data is transferred on `AD7–AD0` during the data portion of the bus cycle.
 - The same pins carry the low-order address earlier in the cycle.
+- Fetch program and data
 
 ### 16.3 Why multiplex address and data?
 
