@@ -496,6 +496,8 @@ The address in HL is 16-bit, so HL can point anywhere in the 64 KiB memory space
 
 The **Program Counter (PC)** is a 16-bit register that holds the memory address from which the CPU will fetch the next instruction byte.
 
+contains the adress of next instruction
+
 ### Main roles
 
 - Identifies the next instruction byte to fetch.
