@@ -1,4 +1,3 @@
-
 ## `CALL` and `RET` in 8085 Microprocessor
 
 A subroutine is a section of code that performs a particular task and can be called whenever that task is needed. It helps us avoid writing the same instructions repeatedly.
@@ -114,3 +113,109 @@ For example, if you use `JMP 2050H`, the processor jumps to `2050H` without savi
 - If a subroutine calls another subroutine, the stack keeps the return addresses in last-in, first-out (LIFO) order.
 
 Memory aid: `CALL` = save the way back and go there. `RET` = retrieve the way back and return.
+
+
+## 3.11 `RNZ` — Return if Not Zero (8085)
+
+`RNZ` is a conditional return instruction. It checks the Zero flag (`Z`) and decides whether the processor should return from the current subroutine.
+
+### 1. Syntax
+
+```
+RNZ
+```
+
+There is no address or label after `RNZ`. It uses the return address already stored on the stack by a previous `CALL`.
+
+### 2. How does `RNZ` work?
+
+The decision depends on the Zero flag:
+
+| Zero flag | Meaning                                                        | What `RNZ` does                 |
+| --------- | -------------------------------------------------------------- | --------------------------------- |
+| `Z = 0` | The previous flag-setting operation produced a non-zero result | Returns to the calling program    |
+| `Z = 1` | The previous flag-setting operation produced a zero result     | Continues to the next instruction |
+
+Memory trick: `RNZ` means Return if Not Zero.
+
+### 3. Example: Understand it line by line
+
+```
+CALL CHECK
+
+; Main program continues here
+HLT
+
+CHECK:
+    CPI 3CH
+    RNZ
+    MVI A, 00H
+    RET
+```
+
+Assume the accumulator initially contains `25H`.
+
+Step 1 — `CALL CHECK`
+
+The processor saves the address of the instruction following `CALL` on the stack and jumps to `CHECK`.
+
+Step 2 — `CPI 3CH`
+
+`CPI` compares the accumulator with `3CH` by internally calculating:
+
+\\[ A-3CH \\]
+
+It does not store the subtraction result in A. It updates the flags.
+
+Here:
+
+\\[ 25H-3CH \neq 0 \\]
+
+Therefore, `Z = 0`.
+
+Step 3 — `RNZ`
+
+Because `Z = 0`, the processor returns immediately to the instruction after `CALL`. The instructions `MVI A, 00H` and `RET` are skipped.
+
+If A had contained `3CH`, the comparison would produce `Z = 1`. In that case, `RNZ` would not return, and the processor would execute `MVI A, 00H`, followed by `RET`.
+
+### 4. Why is `RNZ` useful in a digital clock?
+
+Suppose a seconds counter runs from `00` to `59`, and you need to reset it when it reaches `59H`.
+
+```
+CPI 3BH       ; Compare A with 3BH (59 decimal)
+RNZ           ; If not equal, return immediately
+MVI A, 00H    ; If equal, reset seconds
+RET           ; Return to the calling program
+```
+
+Here, the clock uses packed BCD, so `3BH` is not valid BCD. For a proper BCD clock, compare against `59H` instead:
+
+```
+CPI 59H
+RNZ
+MVI A, 00H
+RET
+```
+
+The logic is:
+
+- A is not `59H`: `Z = 0`, so `RNZ` returns without resetting the seconds.
+- A is `59H`: `Z = 1`, so execution continues and resets the seconds to `00H`.
+
+The calling program can then increment the minutes counter.
+
+### 5. `RNZ` versus `JNZ`
+
+| Feature                              | `RNZ`                         | `JNZ address`                       |
+| ------------------------------------ | ------------------------------- | ------------------------------------- |
+| Full meaning                         | Return if Not Zero              | Jump if Not Zero                      |
+| Checks Zero flag                     | Yes                             | Yes                                   |
+| Uses a specified destination address | No                              | Yes                                   |
+| Uses the return address on the stack | Yes, when taken                 | No                                    |
+| Typical use                          | Exit a subroutine conditionally | Repeat a loop or branch conditionally |
+
+Important: `RNZ` only makes sense when a valid return address is available on the stack. If the Zero flag is `0` and no valid return address exists, the processor may jump to an unintended address.
+
+Also, `RNZ` does not itself change the flags. The flags are usually set by the preceding instruction, such as `CMP`, `CPI`, `ADD`, or `DCR`.
